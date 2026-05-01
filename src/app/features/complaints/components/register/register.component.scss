@@ -1,0 +1,482 @@
+// Variables de diseño responsivo
+$primary-blue:#158753;// #0303f3;
+$legend-color:black;
+$header-title: #fcfdff;
+$header-background: #158753;
+$secondary-blue: #eff6ff;
+$text-main:#158753;
+$text-muted: #6b7280;
+$error-red: #ef4444;
+$border-color: #e5e7eb;
+$border-radius: 0.75rem;
+$header-height: 80px;
+
+.register-container {
+  background-color: #f3f4f6;
+  min-height: 100vh;
+  padding: 0; // Sin padding en móviles para ganar espacio
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+
+  @media (min-width: 640px) {
+    padding: 2.5rem 1rem;
+  }
+
+  .container {
+    max-width: 950px;
+    margin: 0 auto;
+    background: white;
+    box-shadow: none; // Sin sombra en móvil para diseño plano
+    margin-bottom: 2rem;
+
+    @media (min-width: 640px) {
+      border-radius: $border-radius;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  .form-header {
+    background: $primary-blue;
+    padding: 1.5rem;
+    color: white;
+    text-align: center;
+
+    h1 {
+      font-size: 1.35rem; // Más pequeño en móvil
+      font-weight: 700;
+      margin: 0;
+      
+      @media (min-width: 640px) {
+        font-size: 1.75rem;
+      }
+    }
+
+    p {
+      margin-top: 0.5rem;
+      opacity: 0.85;
+      font-size: 0.85rem;
+    }
+  }
+  .error-text {
+    color: #ef4444;
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+  }
+  .complaint-form {
+    padding: 1.25rem; // Padding reducido en móviles
+
+    @media (min-width: 640px) {
+      padding: 2.5rem;
+    }
+
+    fieldset {
+      border: none;
+      padding: 0;
+      margin-bottom: 2rem;
+      
+      legend {
+        font-size: 1rem;
+        font-weight: 700;
+        color: $legend-color;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        border-bottom: 2px solid $secondary-blue;
+        padding-bottom: 0.5rem;
+      }
+    }
+  }
+
+  // Grid Layout Adaptativo
+  .grid-row {
+    display: flex;
+    flex-direction: column; // Vertical por defecto (Móvil)
+    gap: 1rem;
+    margin-bottom: 1rem;
+
+    @media (min-width: 640px) {
+      display: grid;
+      grid-template-cols: 1fr 1fr;
+    // Reordenamiento visual para que país esté a la derecha
+    //  .order-1 { order: 1; }
+    //  .order-2 { order: 2; }
+      gap: 1.25rem;
+      
+/*       &.tertiary {
+        grid-template-cols: 1fr 1fr 1fr;
+      } */
+    }
+  }
+
+  // Estilos de Inputs optimizados para Touch
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    
+    label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: $text-main;
+      margin-bottom: 0.4rem;
+    }
+
+    input, select, textarea {
+      padding: 0.85rem; // Más alto para facilitar el toque
+      border: 1px solid $border-color;
+      border-radius: 0.5rem;
+      font-size: 0.90rem; // Evita el zoom automático en iOS (16px+)
+      //font-size: 0.7rem; // Más pequeño para que quepa mejor en móvil
+      font-weight: 400;
+      transition: border-color 0.2s;
+      //background-color: #fff;
+      background: rgba(255,255,255,0.2); // Fondo semi-transparente elegante
+      color: $text-main;
+      -webkit-appearance: none; // Limpia estilos nativos en móviles
+      appearance: none;         // Propiedad estándar (Navegadores modernos)
+
+      &:focus {
+        outline: none;
+        border-color: $primary-blue;
+        //ring: 2px rgba($primary-blue, 0.2);
+        box-shadow: 0 0 0 3px rgba($primary-blue, 0.2);
+      }
+    }
+
+    textarea {
+      min-height: 100px;
+    }
+  }
+
+  // Zona de Evidencias Compacta
+  .evidence-box {
+    .upload-area {
+      border: 2px dashed $border-color;
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+      text-align: center;
+      background: #f9fafb;
+
+      button {
+        width: 100%; // Botón ancho completo en móvil
+        background: $primary-blue;
+        color: white;
+        border: none;
+        padding: 0.75rem;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        
+        @media (min-width: 640px) {
+          width: auto;
+          background: white;
+          color: $primary-blue;
+          border: 1px solid $border-color;
+        }
+      }
+    }
+
+    .file-list {
+      margin-top: 1rem;
+      li {
+        display: flex;
+        align-items: center;
+        padding: 0.75rem;
+        background: #fff;
+        border: 1px solid $border-color;
+        border-radius: 0.5rem;
+        margin-bottom: 0.5rem;
+        
+        span {
+          flex: 1;
+          font-size: 0.8rem;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .btn-remove {
+          color: $error-red;
+          font-weight: bold;
+          padding: 0.5rem;
+          margin-left: 0.5rem;
+        }
+      }
+    }
+  }
+
+  // Acciones: Botón Flotante o Fijo
+  .actions {
+    margin-top: 2rem;
+    
+    .btn-submit {
+      width: 100%;
+      padding: 1.1rem;
+      background-color: $primary-blue;
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      box-shadow: 0 4px 6px -1px rgba($primary-blue, 0.3);
+
+      &:disabled {
+        background-color: #d1d5db;
+        box-shadow: none;
+      }
+    }
+  }
+}
+//===================================================================
+.input-with-symbol {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  .currency-prefix {
+    position: absolute;
+    left: 12px;
+    font-weight: 600;
+    color: $text-main;
+    pointer-events: none;
+  }
+
+  input {
+    padding-left: 2.5rem !important; // Espacio para el símbolo (S/, $, €)
+  }
+}
+// 1. CABECERA FIJA
+.main-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: $header-height;
+  background: $header-background;
+  color: $header-title;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+
+/*   .header-content {
+    width: 100%;
+    max-width: 1200px; // Un poco más ancho que el formulario para dar aire
+    margin: 0 auto;
+    display: grid;
+    grid-template-cols: 120px 1fr 120px; // Espacio fijo para logo y país, centro flexible
+    align-items: center;
+    padding: 0 1.5rem;
+  } */
+   .header-content {
+    width: 100%;
+    // max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    
+    // Cambiamos Grid por Flex
+    display: flex;
+    justify-content: space-between; // Logo a la izq, País a la der
+    align-items: center;
+
+/*     .logo-section {
+      flex: 0 0 120px; // Ancho fijo de 120px, no crece ni encoge
+    }
+
+    .title-section {
+      flex: 1; // Toma todo el espacio central
+      text-align: center;
+    }
+
+    .country-section {
+      flex: 0 0 120px; // Ancho fijo de 120px
+      display: flex;
+      justify-content: flex-end;
+    } */
+  }
+}
+
+// 2. ELEMENTOS DE CABECERA
+.logo-section {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto; // No crece, mantiene su tamaño de imagen
+
+  .mini-logo {
+    height: 60px; // Tamaño pequeño según pedido
+    width: auto;
+    border-radius: 0.75rem;
+    background-color: #f3f4f6;
+    //filter: brightness(0) invert(1); // Si tu logo es oscuro, esto lo hace blanco
+  }
+}
+
+.title-section {
+  flex: 1; // Toma el espacio del centro
+  text-align: center;
+  h1 {
+    font-size: 1.5rem;
+    margin: 0;
+    font-weight: 700;
+  }
+  p {
+    font-size: 0.8rem;
+    margin: 4px 0 0;
+    opacity: 0.9;
+  }
+  
+  @media (max-width: 640px) {
+    h1 { font-size: 1rem; }
+    p { display: none; } // Ocultar descripción en móvil para ahorrar espacio
+  }
+}
+.country-section {
+  display: flex;
+  justify-content: flex-end;
+  flex: 0 0 auto; // No crece
+}
+// 3. SELECTOR DE PAÍS (Ajustado para cabecera azul)
+.country-selector-container {
+  position: relative;
+  justify-self: end;
+
+  .selected-flag {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    background: rgba(255,255,255,0.2); // Fondo semi-transparente elegante
+    border-radius: 6px;
+    cursor: pointer;
+    
+    .flag { font-size: 1.4rem; }
+    .arrow { color: white; font-size: 0.7rem; }
+  }
+
+  .country-dropdown {
+    top: calc(100% + 10px);
+    right: 0;
+    color: #01300f; // Texto oscuro para el menú
+  }
+}
+
+// 4. COMPENSACIÓN DEL CUERPO
+.main-form-body {
+  padding-top: calc($header-height + 0px) !important; // Evita que el form se meta debajo del header
+  margin-bottom: 2rem;
+  color: $text-main;
+}
+//==========================================================================
+
+// Feedback de Error
+input.ng-invalid.ng-touched {
+  border-color: $error-red !important;
+  background-color: #fffafb;
+}
+
+.select-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  .flag-icon {
+    position: absolute;
+    left: 12px;
+    font-size: 1.2rem;
+    pointer-events: none; // Para que no bloquee el clic al select
+    z-index: 10;
+  }
+
+  select.has-flag {
+    padding-left: 45px; // Espacio para que el texto no choque con la bandera
+    appearance: none; // Limpia estilos nativos para mayor control
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1em;
+  }
+}
+
+// Estilo para pantallas móviles (Touch Friendly)
+@media (max-width: 640px) {
+  .select-wrapper .flag-icon {
+    font-size: 1.4rem; // Un poco más grande para facilitar la vista en móvil
+  }
+}
+
+//----------------------------------------------
+.top-bar {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem 2rem;
+  max-width: 950px;
+  margin: 0 auto;
+}
+
+.country-selector-container {
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+
+  .selected-flag {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 10px;
+    background: white;
+    border-radius: 4px;
+    transition: background 0.2s;
+
+    &:hover {
+      background: #f0f4f8;
+    }
+
+    .flag {
+      font-size: 1.5rem;
+    }
+
+    .arrow {
+      font-size: 0.7rem;
+      color: #666;
+      transition: transform 0.3s;
+      &.open { transform: rotate(180deg); }
+    }
+  }
+
+  .country-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 8px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    z-index: 1000;
+    min-width: 160px;
+    overflow: hidden;
+    animation: slideIn 0.2s ease-out;
+
+    .country-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      transition: background 0.2s;
+
+      &:hover {
+        background-color: #f8fafc;
+      }
+
+      .option-flag { font-size: 1.2rem; }
+      .option-name { font-size: 0.9rem; color: #334155; font-weight: 500; }
+    }
+  }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+// Asegúrate de que el contenedor principal permita ver el dropdown
+.register-wrapper {
+  overflow: visible !important;
+}

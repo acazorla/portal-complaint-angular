@@ -1,0 +1,45 @@
+/* You can add global styles to this file, and also import other style files */
+:host {
+  display: block;
+}
+.change-password-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+/* Ajusta el contenido principal para no solaparse */
+.content {
+  margin-left: 60px;
+  margin-top: 40px;  /* Ajusta según la altura de la navbar */
+  flex: 1;
+  padding: 20px;
+  box-sizing: border-box;
+}
+/* Responsive */
+@media (max-width: 768px) {
+  .content {
+    margin-top: 100px;
+    padding: 15px;
+    margin-left: 50px;
+  }
+}
+
+@media (max-width: 480px) {
+  .content {
+    margin-top: 150px;
+    padding: 10px;
+    margin-left: 45px;
+  }
+}

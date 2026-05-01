@@ -1,0 +1,235 @@
+<div class="register-container">
+
+    <header class="main-header">
+      <div class="header-content">
+        
+        <div class="logo-section">
+          <img src="assets/logo.png" alt="Logo" class="mini-logo">
+        </div>
+
+        <div class="title-section">
+          <h1>Libro de Reclamaciones Virtual</h1>
+          <p>Todos los campos marcados con (*) son obligatorios.</p>
+        </div>
+
+        <div class="country-section">
+          <div class="country-selector-container">
+            <div class="selected-flag" (click)="toggleCountryMenu()">
+              <span class="flag">{{ selectedCountry().flag }}</span>
+              <span class="arrow" [class.open]="isCountryMenuOpen">▼</span>
+            </div>
+
+            <div class="country-dropdown" *ngIf="isCountryMenuOpen">
+              <div class="country-option" 
+                  *ngFor="let country of countriesVM()" 
+                  (click)="selectCountry(country.id)">
+                <span class="option-flag">{{ country.flag }}</span>
+                <span class="option-name">{{ country.name }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+<!--     <div class="top-bar">
+
+    <div class="country-selector-container">
+      <div class="selected-flag" (click)="toggleCountryMenu()">
+        <span class="flag">{{ selectedCountry.flag }}</span>
+        <span class="arrow" [class.open]="isCountryMenuOpen">▼</span>
+      </div>
+
+      <div class="country-dropdown" *ngIf="isCountryMenuOpen">
+        <div class="country-option" 
+             *ngFor="let country of countries" 
+             (click)="selectCountry(country.id)">
+          <span class="option-flag">{{ country.flag }}</span>
+          <span class="option-name">{{ country.name }}</span>
+        </div>
+      </div>
+    </div>
+
+  </div> -->
+  <div class="container main-form-body">
+<!--     <header class="form-header">
+      <h1>Libro de Reclamaciones Virtual</h1>
+      <p>Todos los campos marcados con (*) son obligatorios.</p>
+    </header> -->
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="complaint-form">
+     
+      <fieldset>
+        <legend>1. Identificación del Consumidor</legend>
+        <div class="grid-row">
+          <div class="form-group">
+            <label>Tipo Documento *</label>
+              <select formControlName="documentTypeId">
+                <option *ngFor="let doc of filteredDocuments" [value]="doc.documentTypeId">
+                  {{ doc.abbreviation }} - {{ doc.fullName }}
+                </option>
+              </select>
+          </div>
+          <div class="form-group">
+            <label>N° Documento ({{ currentConfig?.exactLength }} dígitos) *</label>
+              <input type="text" 
+                formControlName="documentNumber" 
+                [placeholder]="currentConfig?.formatMask || 'Ingrese documento'"
+                [maxlength]="currentConfig?.exactLength || 20">
+          
+              <small class="error-text" *ngIf="form.get('documentNumber')?.errors?.['pattern']">
+                Este campo debe ser solo numérico.
+              </small>
+          </div>
+        </div>
+
+        <div class="grid-row">
+          <div class="form-group">
+            <label>Nombres *</label>
+            <input type="text" formControlName="firstName">
+          </div>
+          <div class="form-group">
+            <label>Apellido Paterno *</label>
+            <input type="text" formControlName="lastName">
+          </div>
+          <div class="form-group">
+            <label>Apellido Materno</label>
+            <input type="text" formControlName="middleName">
+          </div>
+        </div>
+
+        <div class="grid-row">
+          <div class="form-group">
+            <label>Email *</label>
+            <input type="email" formControlName="email">
+          </div>
+          <div class="form-group">
+            <label>Teléfono *</label>
+            <input type="text" formControlName="phoneNumber">
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>2. Domicilio y Ubicación</legend>
+        <div class="grid-row">
+          <div class="form-group">
+            <label>Dirección Detallada *</label>
+            <input type="text" formControlName="detailedAddress">
+          </div>
+          <div class="form-group">
+            <label>Código Postal</label>
+            <input type="text" formControlName="postalCode">
+          </div>
+        </div>
+        <div class="grid-row tertiary">
+          <div class="form-group">
+            <label>Departamento (L2)</label>
+            <input type="number" formControlName="locationLevel2Id">
+          </div>
+          <div class="form-group">
+            <label>Provincia (L3)</label>
+            <input type="number" formControlName="locationLevel3Id">
+          </div>
+          <div class="form-group">
+            <label>Distrito (L4)</label>
+            <input type="number" formControlName="locationLevel4Id">
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>3. Representante Legal (Si aplica)</legend>
+        <div class="form-checkbox">
+          <input type="checkbox" id="rep" formControlName="hasRepresentative">
+          <label for="rep">¿Cuenta con representante?</label>
+        </div>
+        <div class="form-group" *ngIf="form.value.hasRepresentative">
+          <label>Nombre del Representante</label>
+          <input type="text" formControlName="representativeName">
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>4. Detalle del Bien Contratado y Reclamo</legend>
+        <div class="grid-row">
+            <div class="form-group">
+              <label>Tipo (R/Q) *</label>
+              <select formControlName="complaintType">
+                <option value="R">Reclamo</option>
+                <option value="Q">Queja</option>
+              </select>
+            </div>
+<!--           <div class="form-group">
+               <label>Monto Reclamado *</label>
+               <input type="number" formControlName="claimedAmount">
+               </div> -->
+          
+            <div class="form-group">
+              <label>Fecha Incidente *</label>
+              <input type="date" formControlName="incidentDate">
+            </div>
+        </div>
+
+<div class="grid-row">
+  <div class="form-group">
+    <label>Moneda *</label>
+    <select formControlName="currencyId">
+      <option *ngFor="let curr of filteredCurrencies()" [value]="curr.currencyId">
+        {{ curr.isoCode }} - {{ curr.name }} ({{ curr.symbol }})
+      </option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>Monto Reclamado *</label>
+    <div class="input-with-symbol">
+      <span class="currency-prefix">{{ selectedCurrencyConfig()?.symbol }}</span>
+      <input 
+        type="number" 
+        formControlName="claimedAmount"
+        [step]="getStepValue()" 
+        placeholder="0.00"
+      >
+    </div>
+    <small class="text-muted" *ngIf="selectedCurrencyConfig()?.precision">
+      Máximo {{ selectedCurrencyConfig()?.precision }} decimales
+    </small>
+  </div>
+</div>
+
+        <div class="form-group">
+          <label>Descripción del Reclamo *</label>
+          <textarea formControlName="complaintDescription" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Pedido del Consumidor *</label>
+          <textarea formControlName="consumerRequest" rows="2"></textarea>
+        </div>
+      </fieldset>
+
+      <fieldset class="evidence-box">
+        <legend>5. Evidencias (Máx 3)</legend>
+        <div class="upload-area" [class.disabled]="evidences.length >= MAX_FILES">
+          <input type="file" (change)="onFileSelected($event)" [disabled]="evidences.length >= MAX_FILES" hidden #fileInput multiple>
+          <button type="button" (click)="fileInput.click()" [disabled]="evidences.length >= MAX_FILES">
+             {{ evidences.length >= MAX_FILES ? 'Límite alcanzado' : '+ Adjuntar archivos' }}
+          </button>
+        </div>
+        <ul class="file-list">
+          <li *ngFor="let file of evidences; let i = index">
+            <span>{{ file.name }} ({{ (file.size/1024).toFixed(1) }} KB)</span>
+            <button type="button" (click)="removeFile(i)" class="btn-remove">Eliminar</button>
+          </li>
+        </ul>
+      </fieldset>
+
+      <div class="actions">
+        <button type="submit" class="btn-submit" [disabled]="form.invalid || isSubmitting">
+          {{ isSubmitting ? 'Procesando registro...' : 'Enviar Formulario de Reclamo' }}
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
