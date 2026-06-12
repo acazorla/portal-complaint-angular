@@ -60,7 +60,7 @@
     <form [formGroup]="form" (ngSubmit)="submit()" class="complaint-form">
      
       <fieldset>
-        <legend>1. Identificación del Consumidor</legend>
+        <legend>1. Identificación del Usuario o Tercer Legitimado</legend>
         <div class="grid-row">
           <div class="form-group">
             <label>Tipo Documento *</label>
@@ -122,20 +122,37 @@
             <input type="text" formControlName="postalCode">
           </div>
         </div>
-        <div class="grid-row tertiary">
-          <div class="form-group">
-            <label>Departamento (L2)</label>
-            <input type="number" formControlName="locationLevel2Id">
-          </div>
-          <div class="form-group">
-            <label>Provincia (L3)</label>
-            <input type="number" formControlName="locationLevel3Id">
-          </div>
-          <div class="form-group">
-            <label>Distrito (L4)</label>
-            <input type="number" formControlName="locationLevel4Id">
-          </div>
-        </div>
+  <div class="grid-row tertiary">
+    <div class="form-group">
+      <label>{{ l2Label() }} *</label>
+      <select formControlName="locationLevel2Id">
+        <option [ngValue]="null">Seleccione...</option>
+        <option *ngFor="let item of level2Divisions()" [value]="item.divisionId">
+          {{ item.divisionName }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>{{ l3Label() }} *</label>
+      <select formControlName="locationLevel3Id">
+        <option [ngValue]="null">Seleccione...</option>
+        <option *ngFor="let item of level3Divisions()" [value]="item.divisionId">
+          {{ item.divisionName }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>{{ l4Label() }}</label>
+      <select formControlName="locationLevel4Id">
+        <option [ngValue]="null">Seleccione...</option>
+        <option *ngFor="let item of level4Divisions()" [value]="item.divisionId">
+          {{ item.divisionName }}
+        </option>
+      </select>
+    </div>
+  </div>
       </fieldset>
 
       <fieldset>
@@ -151,13 +168,13 @@
       </fieldset>
 
       <fieldset>
-        <legend>4. Detalle del Bien Contratado y Reclamo</legend>
+        <legend>4. Detalle del Reclamo</legend>
         <div class="grid-row">
             <div class="form-group">
               <label>Tipo (R/Q) *</label>
               <select formControlName="complaintType">
                 <option value="R">Reclamo</option>
-                <option value="Q">Queja</option>
+                <!-- <option value="Q">Queja</option> -->
               </select>
             </div>
 <!--           <div class="form-group">

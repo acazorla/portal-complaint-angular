@@ -7,7 +7,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "portal-syslab-angular": {
+    "portal-complaint-angular": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -53,12 +53,15 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+          "options": {
+            "proxyConfig": "proxy.conf.json"
+        },
           "configurations": {
             "production": {
-              "buildTarget": "portal-syslab-angular:build:production"
+              "buildTarget": "portal-complaint-angular:build:production"
             },
             "development": {
-              "buildTarget": "portal-syslab-angular:build:development"
+              "buildTarget": "portal-complaint-angular:build:development"
             }
           },
           "defaultConfiguration": "development"

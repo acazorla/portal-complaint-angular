@@ -93,7 +93,14 @@ $header-height: 80px;
     flex-direction: column; // Vertical por defecto (Móvil)
     gap: 1rem;
     margin-bottom: 1rem;
-
+// Dentro de .grid-row en register.component.scss
+&.tertiary {
+  @media (min-width: 640px) {
+    display: grid;
+    grid-template-cols: 1fr 1fr 1fr; // Tres columnas iguales
+    gap: 1rem;
+  }
+}
     @media (min-width: 640px) {
       display: grid;
       grid-template-cols: 1fr 1fr;
@@ -339,15 +346,21 @@ $header-height: 80px;
   justify-self: end;
 
   .selected-flag {
-    display: flex;
+    //display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 8px;
     padding: 6px 12px;
-    background: rgba(255,255,255,0.2); // Fondo semi-transparente elegante
-    border-radius: 6px;
+    //background: rgba(255,255,255,0.2); // Fondo semi-transparente elegante
+    background: #158753; // Color verde primario
+    border-radius: 20px;
+    font-size: 0.9rem;
     cursor: pointer;
     
-    .flag { font-size: 1.4rem; }
+    .flag { 
+      font-family: 'Noto Color Emoji', sans-serif;
+      font-size: 1.2rem; 
+    }
     .arrow { color: white; font-size: 0.7rem; }
   }
 
